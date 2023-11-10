@@ -47,3 +47,17 @@ use pki_types::CertificateDer;
 pub fn load_native_certs() -> Result<Vec<CertificateDer<'static>>, Error> {
     platform::load_native_certs()
 }
+
+/// Used inside unix.rs
+fn load_pem_certs(path: &Path) -> Result<Vec<CertificateDer<'static>>, Error> {
+    let f = File::open(path)?;
+    let mut f = BufReader::new(f);
+    rustls_pemfile::certs(&mut f)
+        .collect::<Result<Vec<_>, _>>()
+        .map_err(|err| {
+            Error::new(
+                ErrorKind::InvalidData,
+                format!("could not load PEM file {path:?}: {err}"),
+            )
+        })
+}

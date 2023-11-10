@@ -33,7 +33,7 @@ mod macos;
 #[cfg(target_os = "macos")]
 use macos as platform;
 
-use std::io::{Error};
+use std::{io::{Error, BufReader, ErrorKind}, path::Path, fs::File};
 
 use pki_types::CertificateDer;
 

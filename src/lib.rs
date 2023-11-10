@@ -7,10 +7,11 @@ fn load_native_certs(mut cx: FunctionContext) -> JsResult<JsString> {
             certs
                 .into_iter()
                 .map(|cert| {
-                    X509Certificate::from_der(&cert.0)
-                    .expect("Could not import to DER")
-                    .encode_pem()
-                    .expect("could not encode to PEM")
+                    let der = X509Certificate::from_der(&cert).expect("Could not import to DER");
+                    let subject = der.subject_common_name().unwrap_or_else(|| String::new());
+                    let issuer = der.issuer_common_name().unwrap_or_else(|| String::new());
+                    let pem = der.encode_pem().expect("could not encode to PEM");
+                    format!("# Subject: {subject}\n# Issuer: {issuer}\n{pem}\n")
                 })
                 .collect()
         });

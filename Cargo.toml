@@ -11,7 +11,7 @@ crate-type = ["cdylib"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rustls-native-certs = "0.6.2"
+rustls-native-certs = { path = "src/rustls-native-certs" }
 x509-certificate = "0.21.0"
 
 [dependencies.neon]

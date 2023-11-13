@@ -1,0 +1,75 @@
+name: Publish Node Addon
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-publish:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 18
+        registry-url: 'https://npm.pkg.github.com'
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+
+    - name: Install and build package
+      run: npm install
+
+    - name: Run test
+      run: npm start
+
+    - name: Rename and move binary
+      run: |
+        mv index.node ./binaries/index-${{ matrix.os }}.node
+
+    - name: Upload binary artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: binary-${{ matrix.os }}
+        path: ./binaries/index-${{ matrix.os }}.node
+
+publish:
+  needs: build
+  runs-on: ubuntu-latest
+
+  steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 18
+        registry-url: 'https://npm.pkg.github.com'
+
+    - name: Download all artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: ./artifacts
+
+    - name: Prepare package
+      run: |
+        mkdir -p ./binaries
+        mv ./artifacts/binary-ubuntu-latest/index-ubuntu-latest.node ./binaries/
+        mv ./artifacts/binary-windows-latest/index-windows-latest.node ./binaries/
+        mv ./artifacts/binary-macos-latest/index-macos-latest.node ./binaries/
+
+    - name: Publish to GitHub Packages
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

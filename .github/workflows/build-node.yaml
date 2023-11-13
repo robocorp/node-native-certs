@@ -1,9 +1,9 @@
-name: Build and Run
+name: Build and Test Node Addon
 
 on: [push]
 
 jobs:
-  build-and-run:
+  build-and-test:
     runs-on: ${{ matrix.os }}
 
     strategy:

@@ -9,7 +9,8 @@
     "build-release": "npm run build -- --release",
     "install": "npm run build-release",
     "start": "node test.js",
-    "test": "cargo test"
+    "test": "cargo test",
+    "postinstall": "node postinstall.js"
   },
   "author": "",
   "license": "ISC",

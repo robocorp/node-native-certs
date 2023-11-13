@@ -17,7 +17,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: 18
+        node-version: '18'
         registry-url: 'https://npm.pkg.github.com'
 
     - name: Set up Rust
@@ -33,6 +33,7 @@ jobs:
 
     - name: Rename and move binary
       run: |
+        mkdir -p ./binaries
         mv index.node ./binaries/index-${{ matrix.os }}.node
 
     - name: Upload binary artifact
@@ -51,7 +52,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: '18'
           registry-url: 'https://npm.pkg.github.com'
 
       - name: Download all artifacts

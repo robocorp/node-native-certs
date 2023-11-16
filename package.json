@@ -1,15 +1,23 @@
 {
-  "name": "native-certs",
+  "name": "@robocorp/native-certs",
   "version": "0.1.0",
   "description": "",
   "main": "index.node",
+  "module": "index.node",
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "files": [
+    "target"
+  ],
   "scripts": {
     "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
     "build-debug": "npm run build --",
     "build-release": "npm run build -- --release",
     "install": "npm run build-release",
     "start": "node test.js",
-    "test": "cargo test"
+    "test": "cargo test",
+    "postinstall": "node postinstall.js"
   },
   "author": "",
   "license": "ISC",

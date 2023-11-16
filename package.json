@@ -7,9 +7,6 @@
   "publishConfig": {
     "access": "restricted"
   },
-  "files": [
-    "target"
-  ],
   "scripts": {
     "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
     "build-debug": "npm run build --",

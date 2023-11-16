@@ -1,6 +1,6 @@
 {
   "name": "@robocorp/native-certs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "main": "index.node",
   "module": "index.node",

@@ -3,6 +3,7 @@ const path = require('path');
 
 const binariesDir = path.join(__dirname, 'binaries');
 const osType = process.platform;
+const cpuArch = process.arch;
 
 let binaryName;
 switch (osType) {
@@ -13,7 +14,11 @@ switch (osType) {
     binaryName = 'index-ubuntu-latest.node';
     break;
   case 'darwin':
-    binaryName = 'index-macos-latest.node';
+    if (cpuArch === 'arm' || cpuArch === 'arm64') {
+      binaryName = 'index-macos-arm-latest.node';
+    } else {
+      binaryName = 'index-macos-latest.node';
+    }
     break;
   default:
     throw new Error(`Unsupported platform: ${osType}`);

@@ -15,7 +15,7 @@ switch (osType) {
     break;
   case 'darwin':
     if (cpuArch === 'arm' || cpuArch === 'arm64') {
-      binaryName = 'index-macos-arm-latest.node';  
+      binaryName = 'index-macos-arm-latest.node';
     } else {
       binaryName = 'index-macos-latest.node';
     }

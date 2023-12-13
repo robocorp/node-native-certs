@@ -9,6 +9,7 @@ on:
 
 jobs:
   build:
+    timeout-minutes: 5
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -50,33 +51,34 @@ jobs:
         name: binary-${{ matrix.os }}
         path: ./binaries/index-${{ matrix.os }}.node
 
-  # publish:
-  #   needs: build
-  #   runs-on: ubuntu-latest
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '18'
-  #         registry-url: 'https://npm.pkg.github.com/'
-  #         scope: '@robocorp'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+          registry-url: 'https://npm.pkg.github.com/'
+          scope: '@robocorp'
 
-  #     - name: Download all artifacts
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         path: ./artifacts
+      - name: Download all artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: ./artifacts
 
-  #     - name: Prepare package
-  #       run: |
-  #         mkdir -p ./binaries
-  #         mv ./artifacts/binary-ubuntu-latest/index-ubuntu-latest.node ./binaries/
-  #         mv ./artifacts/binary-windows-latest/index-windows-latest.node ./binaries/
-  #         mv ./artifacts/binary-macos-latest/index-macos-latest.node ./binaries/
+      - name: Prepare package
+        run: |
+          mkdir -p ./binaries
+          mv ./artifacts/binary-ubuntu-latest/index-ubuntu-latest.node ./binaries/
+          mv ./artifacts/binary-windows-latest/index-windows-latest.node ./binaries/
+          mv ./artifacts/binary-macos-latest/index-macos-latest.node ./binaries/
+          mv ./artifacts/binary-macos-latest/index-macos-latest-large.node ./binaries/index-macos-arm-latest.node
 
-  #     - name: Publish to GitHub Packages
-  #       run: npm publish
-  #       env:
-  #         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

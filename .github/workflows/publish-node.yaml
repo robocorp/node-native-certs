@@ -76,7 +76,7 @@ jobs:
           mv ./artifacts/binary-ubuntu-latest/index-ubuntu-latest.node ./binaries/
           mv ./artifacts/binary-windows-latest/index-windows-latest.node ./binaries/
           mv ./artifacts/binary-macos-latest/index-macos-latest.node ./binaries/
-          mv ./artifacts/binary-macos-latest/index-macos-latest-large.node ./binaries/index-macos-arm-latest.node
+          mv ./artifacts/binary-macos-latest-large/index-macos-latest-large.node ./binaries/index-macos-arm-latest.node
 
       - name: Publish to GitHub Packages
         run: npm publish

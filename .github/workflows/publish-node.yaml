@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest, macos-latest-large]
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-latest-xlarge]
 
     steps:
     - name: Check out the code
@@ -76,7 +76,7 @@ jobs:
           mv ./artifacts/binary-ubuntu-latest/index-ubuntu-latest.node ./binaries/
           mv ./artifacts/binary-windows-latest/index-windows-latest.node ./binaries/
           mv ./artifacts/binary-macos-latest/index-macos-latest.node ./binaries/
-          mv ./artifacts/binary-macos-latest-large/index-macos-latest-large.node ./binaries/index-macos-arm-latest.node
+          mv ./artifacts/binary-macos-latest-xlarge/index-macos-latest-xlarge.node ./binaries/index-macos-arm-latest.node
 
       - name: Publish to GitHub Packages
         run: npm publish

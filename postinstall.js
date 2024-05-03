@@ -17,7 +17,7 @@ switch (osType) {
     if (cpuArch === 'arm' || cpuArch === 'arm64') {
       binaryName = 'index-macos-arm-latest.node';
     } else {
-      binaryName = 'index-macos-latest.node';
+      binaryName = 'index-macos-13.node';
     }
     break;
   default:
